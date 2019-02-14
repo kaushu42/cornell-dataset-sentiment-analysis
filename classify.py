@@ -32,3 +32,15 @@ except:
     with open("y.pickle", "wb") as f:
         pickle.dump(y, f)
 
+# Preprocessing the data
+corpus = []
+
+for i in range(len(y)):
+    # Remove all non words characters and convert to lowercase
+    review = re.sub(r'\W', ' ', str(X[i])).lower()
+    
+    # Remove all single letter words like I, a, ...
+    review = re.sub(r'((^[a-z]\s+)|(\s+[a-z]\s+))', ' ', review)
+    # Remove all extra spaces we have introduced
+    review = re.sub(r'\s+', ' ', review)
+    corpus.append(review)
