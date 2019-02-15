@@ -1,2 +1,3 @@
 *.pickle
 .vscode/
+__pycache__/*
