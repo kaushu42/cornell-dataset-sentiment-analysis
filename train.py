@@ -1,6 +1,3 @@
-import re
-
-import numpy as np
 import nltk
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -8,24 +5,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 
-from utils import load_data, save_model
+from utils import load_data, save_model, preprocess_text
 
 nltk.download('stopwords')
 
 X, y = load_data('dataset/')
     
 # Preprocessing the data
-corpus = []
-
-for i in range(len(y)):
-    # Remove all non words characters and convert to lowercase
-    review = re.sub(r'\W', ' ', str(X[i])).lower()
-
-    # Remove all single letter words like I, a, ...
-    review = re.sub(r'((^[a-z]\s+)|(\s+[a-z]\s+))', ' ', review)
-    # Remove all extra spaces we have introduced
-    review = re.sub(r'\s+', ' ', review)
-    corpus.append(review)
+corpus = preprocess_text(X)
 
 # Creating a Tfidf models which will use 3000 best words
 # min_df = Minimum number of documents a word must appear to be included in the model

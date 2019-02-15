@@ -1,4 +1,5 @@
 import pickle
+import re
 
 from sklearn.datasets import load_files
 
@@ -45,5 +46,18 @@ def save_model(model, filename):
 
 def load_model(filename):
     with open(filename, 'rb') as f:
-        model = pickle.load(filename)
+        model = pickle.load(f)
     return model
+
+def preprocess_text(X):
+    corpus = []
+    for i in range(len(X)):
+        # Remove all non words characters and convert to lowercase
+        review = re.sub(r'\W', ' ', str(X[i])).lower()
+
+        # Remove all single letter words like I, a, ...
+        review = re.sub(r'((^[a-z]\s+)|(\s+[a-z]\s+))', ' ', review)
+        # Remove all extra spaces we have introduced
+        review = re.sub(r'\s+', ' ', review)
+        corpus.append(review.strip())
+    return corpus
