@@ -26,15 +26,24 @@ def save_data_pickle(X, y):
 # Try to load the pickled data if it exists
 def load_data(path):
     try:
-        print("Loading pickled data.......")
+        print("----------Loading pickled data.......")
         X, y = load_data_pickle('X.pickle', 'y.pickle')
-        print('Pickled data loaded.')
+        print('----------Pickled data loaded.')
     # Load the data using slower method if the above one fails
     except:
-        print('Loading the dataset using sklearn......')
+        print('!!!!!!!!!!LOAD FAILED! Resorting to loading using sklearn')
         X, y = load_data_normal(path)
-        print('Data loaded.')
-        print('Pickling data....')
+        print('----------Data loaded.')
+        print('----------Pickling data....')
         save_data_pickle(X, y)
-        print('Data pickled.')
+        print('----------Data pickled.')
     return X, y
+
+def save_model(model, filename):
+    with open(filename, 'wb') as f:
+        pickle.dump(model, f)
+
+def load_model(filename):
+    with open(filename, 'rb') as f:
+        model = pickle.load(filename)
+    return model
