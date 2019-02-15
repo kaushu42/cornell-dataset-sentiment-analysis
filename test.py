@@ -5,7 +5,7 @@ try:
 except:
     print('Error loading the model. Please make sure you have trained the model using train.py first.')
     exit(-1)
-review = input('Enter a review: ')
+review = [input('Enter a review: ')]
 review = preprocess_text(review)
 print(review)
 x = vectorizer.transform(review).toarray()
